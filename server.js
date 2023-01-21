@@ -2,7 +2,7 @@ const connectTomongo = require('./db');
 const express = require('express')
 var cors = require('cors') //it is imported and use for using api internally in a project
 const app = express()
-connectTomongo();
+connectTomongo()
 app.use(cors());//Implementing cors
 
 
