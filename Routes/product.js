@@ -16,6 +16,39 @@ try {
 
 
 });
+//Clone Route ForPagination
+router.get('/getproduct',async(req,res)=>{
+    try {
+        const data = await Products.find();//fetching notes of the user id given from database
+        let page = req.query.page || 1;
+        let limit = 4;
+        let startIndex = (page - 1) * limit;
+        let endIndex = page * limit;
+        let paginatedData = data.slice(startIndex, endIndex);
+        let totalPages = Math.ceil(data.length / limit);
+        res.json({data:paginatedData,totalPages});
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Some error has been Occured");//through internal server error in the response
+       
+    }
+    
+    
+    });
+//searching for product by name
+router.get('/search',async(req,res)=>{
+try {
+    const data = await Products.find();
+
+    const query = req.query.query;
+    const results = data.filter((item )=> item.Product_name.toLowerCase().includes(query.toLowerCase()));
+    res.json(results);
+} catch (error) {
+    console.error(error.message);
+    res.status(500).send("Some error has been Occured");//through internal server error in the response
+     
+}
+});
 // Creating a product
 //router 2: for adding Productsto the database  :: Creating
 router.post('/addproducts',[

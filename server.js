@@ -5,7 +5,6 @@ const app = express()
 connectTomongo();
 app.use(cors());//Implementing cors
 
-const port = 5000
 
 app.use(express.json());
 
@@ -19,10 +18,8 @@ app.get('/images/:image', (req, res) => {
   res.sendFile(`${__dirname}/uploads/${req.params.image}`)
 })
 
-
-
-
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server is listening on port ${process.env.PORT || 5000}`);
 });
+
+
