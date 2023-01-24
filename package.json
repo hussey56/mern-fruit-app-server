@@ -6,7 +6,7 @@
   
   "description": "Your NoteBook on the Cloud",
   
-  "main": "index.js",
+  "main": "server.js",
   
   "scripts": {
   
