@@ -13,6 +13,14 @@ const UserSchema = new Schema({
         type:String,
         required:true
     },
+    gender:{
+        type:String,
+        default:'Not Described'
+    },
+    address:{
+        type:String,
+     default:'Add Your Address'
+    },
     timestamp:{
         type:Date,
         default:Date.now

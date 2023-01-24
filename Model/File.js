@@ -7,11 +7,12 @@ const FileSchema = new Schema({
     },
     name:{
         type:String,
-        required:true,
+        default:'Hassan'
     },
     phone:{
         type:Number,
-        required: true,
+        default:32423423523,
+       
     }
 });
 module.exports = mongoose.model('files',FileSchema);

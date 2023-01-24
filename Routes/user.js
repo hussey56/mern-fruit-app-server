@@ -27,7 +27,9 @@ async(req,res)=>{
         user = await Users.create({
             name:req.body.name,
             email:req.body.email,
-            password:hashp
+            password:hashp,
+            gender:req.body.gender,
+            address:req.body.address,
         });
         const data = {
             user:{

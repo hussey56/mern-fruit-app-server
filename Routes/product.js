@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Products = require('../Model/Products'); // model schema import
 const { body, validationResult } = require('express-validator');//express validator import
+const uploads  = require('../middleware/imageMiddleWare')
 
 //Route 1 :for fetching user Products ::Retrieving  /api/products/getproducts
 router.get('/getproducts',async(req,res)=>{
@@ -49,6 +50,9 @@ try {
      
 }
 });
+
+
+
 // Creating a product
 //router 2: for adding Productsto the database  :: Creating
 router.post('/addproducts',[
@@ -95,10 +99,34 @@ router.delete('/deleteproduct/:id',async(req,res)=>{
     }
 
 });
+// Adding a product with multer Image
+router.post('/addaproduct',uploads.single('file'),[body("Product_name").isLength({ min: 3 }),
+body("Price").isLength({min:3}),
+body("category").isLength({min:5}),
+body("status").isLength({min:3}),],async(req,res)=>{
+try {
+    const { Product_name,Price,status,category } = req.body;
+    const file = req.file;
+    const filepath = req.body.filepath 
+
+    const pro =  new Products({
+        Product_name,img:file.filename,Price,status,category
+    });
+
+    const save = await pro.save();
+    res.json(pro);
+} catch (error) {
+    console.log({error,er:"Some thing out of the box"});
+
+}
+});
 
 //Update a product
-router.put('/updateproduct/:id',async(req,res)=>{
-    const {Product_name,img,Price,status,category} = req.body;
+router.put('/updateproduct/:id',uploads.single('file'),async(req,res)=>{
+   
+    const {Product_name,Price,status,category} = req.body;
+  const file = req.file;
+    const filepath = req.body.filepath 
     let id = await Products.findById(req.params.id);
     if(!id){
         return res.status(404).send("Product not found");
@@ -111,8 +139,8 @@ try {
 if(Price){ //then if title exist alter itself and make it owns title
     newProduct.Price = Price;
 }
-if(img){
-    newProduct.img = img;
+if(file){
+    newProduct.img = file.filename;
  
 }
 if(status){
