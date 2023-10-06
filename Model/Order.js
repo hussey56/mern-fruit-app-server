@@ -33,7 +33,6 @@ zip:{
 user_id:{
     type:String,
     required:true,
-    default:'652398745623',
 },
 cart:{
     type:Array,
@@ -44,6 +43,11 @@ cartTotal:{
     type:String,
     required:true,
     default:0,
+},
+payment_status:{
+    type:String,
+    required:true,
+    default:'unpaid'
 },
 timestamp:{
     type:Date,

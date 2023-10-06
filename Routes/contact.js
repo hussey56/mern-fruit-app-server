@@ -30,4 +30,44 @@ body("message").isLength({min:10})],async(req,res)=>{
          
     }
 });
+router.get('/seeallmessages',async(req,res)=>{
+    try{
+        let msgs = await Messages.find().sort({timestamp: -1});
+        res.json(msgs)
+    }catch(error){
+        console.log(error);
+        res.status(500).send("Some Internal Server Has Occurred")
+    }
+
+});
+router.get('/unseenmessages',async(req,res)=>{
+    try{
+        let msgs = await Messages.find({seen:false});
+        res.json(msgs)
+    }catch(error){
+        console.log(error);
+        res.status(500).send("Some Internal Server Has Occurred")
+    }
+})
+router.get('/getsingle/:id',async(req,res)=>{
+    try{
+        let {id} = req.params
+        let msg = await Messages.find({_id:id});
+        res.json(msg)
+    }catch(error){
+        res.status(500).send("Some Server Error Has bEEN oCCURED")
+    }
+});
+router.put('/viewmsg/:id',[body("seen").isLength({min:4})],async(req,res)=>{
+try{
+    let id = await Messages.findById(req.params.id);
+    if(!id){
+        return res.status(403).send("Product not found");
+    }
+    const newer = await  Messages.findByIdAndUpdate(req.params.id, { seen: req.body.seen }, { new: true })
+    res.send(newer);
+}catch(error){
+    res.status(500).send("Some Internal Server Error has been Occured")
+}
+});
 module.exports = router;

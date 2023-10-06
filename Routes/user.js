@@ -64,7 +64,7 @@ const data = {
     }
 }
 const AuthToken = jwt.sign(data,JWT_SECRET);
-res.json({AuthToken});
+res.send({AuthToken});
       }catch (error) {
         res.status(500).send("Some Server error has been occured") 
 
@@ -73,7 +73,7 @@ res.json({AuthToken});
 // user login data 
 router.post('/userdata',fetchUser,async(req,res)=>{
     try {
-        userId = req.user.id;
+       let  userId = req.user.id;
         const user = await Users.findById(userId).select('-password');
         if(!user){
             res.send(invalid);

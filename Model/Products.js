@@ -17,8 +17,8 @@ const ProductsSchema = new Schema({
         },
         Price:{
             type:Number,
-            min: 0, // minimum value allowed
-    max: 400, // maximum value allowed
+            min: 0, // minimum value allowe
+             // maximum value allowed
             required:true,
          
         },

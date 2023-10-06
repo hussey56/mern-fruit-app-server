@@ -5,14 +5,20 @@ const FileSchema = new Schema({
         type:String,
         required:true,
     },
-    name:{
-        type:String,
-        default:'Hassan'
+    file_type:{
+type:String,
+default:'png',
+required:true,
     },
-    phone:{
-        type:Number,
-        default:32423423523,
-       
+    file_size:{
+        type:String,
+        default:'200',
+        required:true,
+    },
+    timestamp:{
+        type:Date,
+        default:Date.now(),
+        required:true,
     }
 });
 module.exports = mongoose.model('files',FileSchema);

@@ -13,10 +13,20 @@ app.use('/api/users',require('./Routes/user'));
 app.use('/api/contact',require('./Routes/contact'));
 app.use('/api/orders',require('./Routes/order'));
 app.use('/api/files',require('./Routes/file'));
+app.use('/admin',require('./Routes/admin'));
 app.use(express.static('images'))
 app.get('/images/:image', (req, res) => {
-  res.sendFile(`${__dirname}/uploads/${req.params.image}`)
+  res.sendFile(`uploads/${req.params.image}`,{root:__dirname})
 })
+
+app.get('/media/:image', (req, res) => {
+  try {
+    res.sendFile(`media/${req.params.image}`,{root:__dirname})
+
+  } catch (error) {
+    console.log(error)
+  }
+})   
 
 app.listen(process.env.PORT || 5000, () => {
   console.log(`Server is listening on port ${process.env.PORT || 5000}`);
